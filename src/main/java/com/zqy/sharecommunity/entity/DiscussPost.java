@@ -2,24 +2,26 @@ package com.zqy.sharecommunity.entity;
 
 import java.util.Date;
 
+
+//帖子实体类
 public class DiscussPost {
     private Integer id;
 
-    private String userId;
+    private int userId;
 
-    private String title;
+    private String title;   //标题
 
-    private Integer type;
+    private Integer type;  // 0-普通  1-置顶
 
-    private Integer status;
+    private Integer status;   //0-正常  1-精华  2-拉黑
 
     private Date createTime;
 
-    private Integer commentCount;
+    private Integer commentCount;   //评论数
 
-    private Double score;
+    private Double score;    //排名用的
 
-    private String content;
+    private String content;    //内容
 
     public Integer getId() {
         return id;
@@ -29,12 +31,12 @@ public class DiscussPost {
         this.id = id;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -91,5 +93,20 @@ public class DiscussPost {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "DiscussPost{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", title='" + title + '\'' +
+                ", type=" + type +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", commentCount=" + commentCount +
+                ", score=" + score +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

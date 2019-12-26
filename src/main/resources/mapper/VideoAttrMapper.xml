@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqy.sharecommunity.dao.VideoAttrMapper" >
+
+  <insert id="insert" parameterType="com.zqy.sharecommunity.entity.VideoAttr" useGeneratedKeys="true" keyProperty="id">
+    insert into video_attr (id, remark,video_name, video_actors,
+      video_director, video_language,video_status, intro,img,create_time,
+      update_time, show_date, video_id
+      )
+    values (#{id,jdbcType=INTEGER},  #{remark,jdbcType=VARCHAR},#{videoName,jdbcType=VARCHAR}, #{videoActors,jdbcType=VARCHAR},
+      #{videoDirector,jdbcType=VARCHAR}, #{videoLanguage,jdbcType=VARCHAR}, #{videoStatus,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR},
+      #{img,jdbcType=VARCHAR},now(),#{updateTime,jdbcType=TIMESTAMP}, #{showDate,jdbcType=VARCHAR},#{videoId,jdbcType=INTEGER}
+      )
+  </insert>
+</mapper>

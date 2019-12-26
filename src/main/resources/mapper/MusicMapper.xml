@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqy.sharecommunity.dao.MusicMapper" >
+
+
+  <insert id="insert" parameterType="com.zqy.sharecommunity.entity.Music" useGeneratedKeys="true" keyProperty="id">
+    insert into music (id, title, author, 
+      country, songwriter, `language`,
+      compose, album_title, pic_huge, 
+      pic_small, publish_time, proxy_comoany, 
+      download_url, lyric, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{songwriter,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{compose,jdbcType=VARCHAR}, #{albumTitle,jdbcType=VARCHAR}, #{picHuge,jdbcType=VARCHAR}, 
+      #{picSmall,jdbcType=VARCHAR}, #{publishTime,jdbcType=VARCHAR}, #{proxyComoany,jdbcType=VARCHAR}, 
+      #{downloadUrl,jdbcType=VARCHAR}, #{lyric,jdbcType=VARCHAR}, now(),
+      now())
+  </insert>
+</mapper>

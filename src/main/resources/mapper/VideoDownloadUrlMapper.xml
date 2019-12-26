@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqy.sharecommunity.dao.VideoDownloadUrlMapper" >
+
+  <insert id="insert" parameterType="com.zqy.sharecommunity.entity.VideoDownloadUrl" useGeneratedKeys="true" keyProperty="id">
+    insert into video_download_url (id, video_id, download_url,
+      create_time, update_time)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=INTEGER}, #{item.videoId,jdbcType=INTEGER}, #{item.downloadUrl,jdbcType=VARCHAR},
+      now(), now())
+    </foreach>
+
+  </insert>
+</mapper>

@@ -2,18 +2,14 @@ package com.zqy.sharecommunity.dao;
 
 import com.zqy.sharecommunity.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(User record);
+    User selectByUserId(@Param("userId") Integer userId);
 
-    int insertSelective(User record);
 
-    User selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqy.sharecommunity.dao.VideoMapper" >
+
+  <insert id="insert" parameterType="com.zqy.sharecommunity.entity.Video" useGeneratedKeys="true" keyProperty="id">
+    insert into video (id, video_new_name, video_url, 
+      area_type_id, video_type_id, update_time, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{videoNewName,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR}, 
+      #{areaTypeId,jdbcType=INTEGER}, #{videoTypeId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
+      now())
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zqy.sharecommunity.entity.Video" >
+    update video
+    set video_new_name = #{videoNewName,jdbcType=VARCHAR},
+      video_url = #{videoUrl,jdbcType=VARCHAR},
+      area_type_id = #{areaTypeId,jdbcType=INTEGER},
+      video_type_id = #{videoTypeId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
