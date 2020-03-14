@@ -2,14 +2,13 @@ package com.zqy.sharecommunity.util;
 
 import com.zqy.sharecommunity.entity.Video;
 import com.zqy.sharecommunity.entity.VideoAttr;
-import com.zqy.sharecommunity.entity.VideoDownloadUrl;
+import com.zqy.sharecommunity.entity.DownloadUrl;
 import com.zqy.sharecommunity.service.VideoService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class SpiderVideoTask {
     @Autowired
     private VideoService videoService;
 
-    @Scheduled(fixedDelay = 100 * 1000)   //每十秒爬一次
+    //@Scheduled(fixedDelay = 100 * 1000)   //每十秒爬一次
     //@Scheduled(cron = "0 0 12 * * ?")   //每天中午12点爬一次
     public void spiderTask() throws Exception {
         //声明需要解析的初始地址
@@ -152,10 +151,10 @@ public class SpiderVideoTask {
 
             //下载链接
             Elements trs2 = trs.get(4).select("tr");
-            List<VideoDownloadUrl> urls = new ArrayList<>();
+            List<DownloadUrl> urls = new ArrayList<>();
 
             for (Element tr :trs2) {
-                VideoDownloadUrl url=new VideoDownloadUrl();
+                DownloadUrl url=new DownloadUrl();
                 url.setDownloadUrl(tr.select("td").text());
                 url.setVideoId(videoAttr.getVideoId());
                 urls.add(url);

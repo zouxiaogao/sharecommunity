@@ -2,16 +2,36 @@ package com.zqy.sharecommunity.entity;
 
 import java.util.Date;
 
-public class VideoDownloadUrl {
+public class DownloadUrl {
     private Integer id;
 
     private Integer videoId;
+
+    private Integer bookId;
+
+    private String chapterName;
 
     private String downloadUrl;
 
     private Date createTime;
 
     private Date updateTime;
+
+    public String getChapterName() {
+        return chapterName;
+    }
+
+    public void setChapterName(String chapterName) {
+        this.chapterName = chapterName;
+    }
+
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
 
     public Integer getId() {
         return id;

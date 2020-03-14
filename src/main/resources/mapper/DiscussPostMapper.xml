@@ -25,7 +25,6 @@
       and user_id = #{userId}
     </if>
     order by type desc,create_time desc
-    limit #{offset},#{limit}
   </select>
 
 

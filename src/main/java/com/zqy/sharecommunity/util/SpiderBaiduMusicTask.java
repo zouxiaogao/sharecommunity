@@ -3,27 +3,20 @@ package com.zqy.sharecommunity.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zqy.sharecommunity.entity.Music;
-import com.zqy.sharecommunity.entity.Video;
-import com.zqy.sharecommunity.entity.VideoAttr;
-import com.zqy.sharecommunity.entity.VideoDownloadUrl;
 import com.zqy.sharecommunity.service.MusicService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author zqy
  * @Date 2019/12/26
  */
 @Component
-public class SpiderMusicTask {
+public class SpiderBaiduMusicTask {
 
     @Autowired
     private HttpUtils httpUtils;
@@ -31,7 +24,7 @@ public class SpiderMusicTask {
     private MusicService musicService;
 
 
-    @Scheduled(fixedDelay = 100 * 1000)   //每十秒爬一次
+    //@Scheduled(fixedDelay = 100 * 1000)   //每十秒爬一次
     //@Scheduled(cron = "0 0 12 * * ?")   //每天中午12点爬一次
     public void spiderTask() throws Exception {
 
@@ -43,7 +36,7 @@ public class SpiderMusicTask {
         //解析数据
         this.parse(html);
 
-        System.out.println("音乐数据抓取完成！");
+        System.out.println("百度音乐数据抓取完成！");
     }
 
 
@@ -116,16 +109,9 @@ public class SpiderMusicTask {
             String lyric = httpUtils.doGetHtmlUtf8(lrclink);
             music.setLyric(lyric);
 
-
-
             musicService.save(music);
 
-            System.out.println();
-
         }
-
-        System.out.println();
-
     }
 
 }

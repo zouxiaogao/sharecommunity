@@ -9,10 +9,14 @@ package com.zqy.sharecommunity.util;
 //封装分页信息
 public class Page {
 
-    private int current;  //当前页码
-    private int limit;  //上限条数
-    private int rows; //总数据数 计算页数
-    private String path; //查询路径 （用于复用分页连接）
+    // 当前页码
+    private int current = 1;
+    // 显示上限
+    private int limit = 10;
+    // 数据总数(用于计算总页数)
+    private int rows;
+    // 查询路径(用于复用分页链接)
+    private String path;
 
     public int getCurrent() {
         return current;
@@ -32,7 +36,6 @@ public class Page {
         if (limit >= 1 && limit <= 100) {
             this.limit = limit;
         }
-
     }
 
     public int getRows() {
@@ -40,7 +43,9 @@ public class Page {
     }
 
     public void setRows(int rows) {
-        this.rows = rows;
+        if (rows >= 0) {
+            this.rows = rows;
+        }
     }
 
     public String getPath() {
@@ -50,8 +55,6 @@ public class Page {
     public void setPath(String path) {
         this.path = path;
     }
-
-
 
     /**
      * 获取当前页的起始行
@@ -97,7 +100,5 @@ public class Page {
         int total = getTotal();
         return to > total ? total : to;
     }
-
-
 
 }

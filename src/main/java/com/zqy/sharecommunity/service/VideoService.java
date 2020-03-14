@@ -1,8 +1,14 @@
 package com.zqy.sharecommunity.service;
 
+import com.zqy.sharecommunity.dao.VideoAttrMapper;
+import com.zqy.sharecommunity.dao.VideoDownloadUrlMapper;
+import com.zqy.sharecommunity.dao.VideoMapper;
+import com.zqy.sharecommunity.entity.DownloadUrl;
 import com.zqy.sharecommunity.entity.Video;
 import com.zqy.sharecommunity.entity.VideoAttr;
-import com.zqy.sharecommunity.entity.VideoDownloadUrl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -10,30 +16,32 @@ import java.util.List;
  * @Author zqy
  * @Date 2019/12/24
  */
-public interface VideoService {
+@Service
+public class VideoService {
 
-    /**
-     * 保存电影
-     * @param video
-     */
-    public void saveVideo(Video video);
+    @Autowired
+    private VideoMapper videoMapper;
+    @Autowired
+    private VideoAttrMapper videoAttrMapper;
+    @Autowired
+    private VideoDownloadUrlMapper videoDownloadUrl;
 
-    /**
-     * 保存电影详情
-     * @param videoAttr
-     */
-    public void saveVideoAttr(VideoAttr videoAttr);
+    @Transactional
+    public void saveVideo(Video video) {
+        videoMapper.insert(video);
+    }
 
-    /**
-     * 保存电影下载链接
-     * @param downloadUrl
-     */
-    public void saveDownloadUrl(List<VideoDownloadUrl> downloadUrl);
+    @Transactional
+    public void saveVideoAttr(VideoAttr videoAttr) {
+        videoAttrMapper.insert(videoAttr);
+    }
 
-    /**
-     * 根据条件查询电影
-     * @param video
-     * @return
-     */
-    public List<Video> findAll(Video video);
+    @Transactional
+    public void saveDownloadUrl(List<DownloadUrl> downloadUrl) {
+        videoDownloadUrl.insert(downloadUrl);
+    }
+
+    public List<Video> findAll(Video video) {
+        return null;
+    }
 }

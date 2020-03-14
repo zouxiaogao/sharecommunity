@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zqy.sharecommunity.dao.BookMapper" >
+
+  <insert id="insert" parameterType="com.zqy.sharecommunity.entity.Book" useGeneratedKeys="true" keyProperty="id">
+    insert into book (id, book_name, book_author, period, book_mark,book_mark_intro,book_intro, book_url, book_img,create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR},#{bookMark,jdbcType=VARCHAR}, #{bookMarkIntro,jdbcType=LONGVARCHAR},#{bookIntro,jdbcType=VARCHAR}, #{bookUrl,jdbcType=VARCHAR},#{bookImg,jdbcType=VARCHAR},now(), now()
+      )
+  </insert>
+</mapper>

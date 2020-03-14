@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface DiscussPostMapper {
     //查询全部帖子
-    List<DiscussPost> selectDiscussPosts(@Param("userId") int userId,@Param("offset")int offset,@Param("limit")int limit);
+    List<DiscussPost> selectDiscussPosts(@Param("userId") int userId);
 
     //查询帖子的行号
     int selectDiscussPostRows(@Param("userId")int userId);
