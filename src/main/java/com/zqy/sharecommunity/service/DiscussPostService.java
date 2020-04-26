@@ -2,8 +2,10 @@ package com.zqy.sharecommunity.service;
 
 import com.zqy.sharecommunity.dao.DiscussPostMapper;
 import com.zqy.sharecommunity.entity.DiscussPost;
+import com.zqy.sharecommunity.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class DiscussPostService {
 
     @Autowired
     private DiscussPostMapper discussPostMapper;
+    @Autowired
+    private SensitiveFilter sensitiveFilter;
 
     public List<DiscussPost> selectDiscussPosts(int userId){
         return discussPostMapper.selectDiscussPosts(userId);
@@ -25,4 +29,42 @@ public class DiscussPostService {
     public int selectDiscussPostRows(int userId){
         return discussPostMapper.selectDiscussPostRows(userId);
     }
+
+    public int addDiscussPost(DiscussPost discussPost){
+        if(discussPost == null){
+            throw new IllegalArgumentException("参数不能为空！");
+        }
+
+        //转义HTML标记
+        discussPost.setTitle(HtmlUtils.htmlEscape(discussPost.getTitle()));
+        discussPost.setContent(HtmlUtils.htmlEscape(discussPost.getContent()));
+        //过滤敏感词
+        discussPost.setTitle(sensitiveFilter.filter(discussPost.getTitle()));
+        discussPost.setContent(sensitiveFilter.filter(discussPost.getContent()));
+
+        return discussPostMapper.insertDiscussPost(discussPost);
+    }
+
+
+    public DiscussPost findDiscussPostById(int id){
+        return discussPostMapper.selectDiscussPostById(id);
+    }
+
+
+    public int updateCommentCount(int id,int commentCount){
+        return discussPostMapper.updateCommentCount(id,commentCount);
+    }
+
+
+
+    //后台模糊查询
+    public List<DiscussPost> findPosts(String title){
+        return discussPostMapper.selectDiscussPostsBySelective(title);
+    }
+
+    //修改状态：置顶加精 删除
+    public int updatePostStatus(int status,int id){
+        return discussPostMapper.updatePostStatus(status,id);
+    }
+
 }

@@ -2,13 +2,82 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zqy.sharecommunity.dao.VideoMapper" >
 
+  <sql id="selectFields">
+        id, video_new_name, video_url, area_type_id, video_type_id, status,create_time,update_time
+    </sql>
+
+  <sql id="insertFields">
+        video_new_name, video_url, area_type_id, video_type_id, status,create_time,update_time
+    </sql>
+
+    <select id="selectVideos" resultType="VideoDTO">
+        select
+        v.id,
+        v.video_new_name,
+        v.create_time,
+        v.update_time,
+        v.status,
+        a.area_name,
+        t.type_name
+        from video v
+        left join area a on v.area_type_id=a.id
+        left join type t on v.video_type_id=t.id
+        where v.status = 0
+        order by create_time desc
+        limit #{offset}, #{limit}
+    </select>
+
+
+    <select id="selectVideosBySelective" resultType="VideoDTO">
+        select
+        v.id,
+        v.video_new_name,
+        v.create_time,
+        v.update_time,
+        v.status,
+        a.area_name,
+        t.type_name
+        from video v
+        left join area a on v.area_type_id=a.id
+        left join type t on v.video_type_id=t.id
+        where v.status = 0
+        <if test="title != null">
+            and v.video_new_name like "%"#{title}"%"
+        </if>
+        order by create_time desc
+    </select>
+
+
+    <select id="selectVideoById" resultType="VideoDTO">
+        select
+        v.id,
+        v.video_new_name,
+        v.create_time,
+        v.create_time,
+        a.area_name,
+        t.type_name
+        from video v
+        left join area a on v.area_type_id=a.id
+        left join type t on v.video_type_id=t.id
+        where v.status = 0
+        and v.id=#{videoId}
+    </select>
+
+    <select id="selectVideoCount" resultType="int">
+       select
+        count(v.id)
+        from video v
+        left join area a on v.area_type_id=a.id
+        left join type t on v.video_type_id=t.id
+        where v.status = 0
+    </select>
+
+
   <insert id="insert" parameterType="com.zqy.sharecommunity.entity.Video" useGeneratedKeys="true" keyProperty="id">
-    insert into video (id, video_new_name, video_url, 
-      area_type_id, video_type_id, update_time, 
-      create_time)
-    values (#{id,jdbcType=INTEGER}, #{videoNewName,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR}, 
-      #{areaTypeId,jdbcType=INTEGER}, #{videoTypeId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
-      now())
+    insert into video (<include refid="insertFields"></include>)
+    values (#{videoNewName,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR},
+      #{areaTypeId,jdbcType=INTEGER}, #{videoTypeId,jdbcType=INTEGER},#{status}, now(),#{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.zqy.sharecommunity.entity.Video" >
     update video
@@ -20,4 +89,14 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+    <update id="updateVideoStatus">
+        update video
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+
+
 </mapper>

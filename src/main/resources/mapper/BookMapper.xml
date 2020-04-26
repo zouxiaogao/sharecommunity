@@ -1,11 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zqy.sharecommunity.dao.BookMapper" >
+  <sql id="selectFields">
+        id, book_name, book_author, period, book_mark,book_mark_intro,book_intro, book_url, book_img,status,create_time, update_time    </sql>
+
+  <sql id="insertFields">
+        book_name, book_author, period, book_mark,book_mark_intro,book_intro, book_url, book_img,status,create_time, update_time
+    </sql>
+
 
   <insert id="insert" parameterType="com.zqy.sharecommunity.entity.Book" useGeneratedKeys="true" keyProperty="id">
-    insert into book (id, book_name, book_author, period, book_mark,book_mark_intro,book_intro, book_url, book_img,create_time, update_time
+    insert into book (id, book_name, book_author, period, book_mark,book_mark_intro,book_intro, book_url, book_img,status,create_time, update_time
       )
-    values (#{id,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR},#{bookMark,jdbcType=VARCHAR}, #{bookMarkIntro,jdbcType=LONGVARCHAR},#{bookIntro,jdbcType=VARCHAR}, #{bookUrl,jdbcType=VARCHAR},#{bookImg,jdbcType=VARCHAR},now(), now()
+    values (#{id,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookAuthor,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR},#{bookMark,jdbcType=VARCHAR}, #{bookMarkIntro,jdbcType=LONGVARCHAR},#{bookIntro,jdbcType=VARCHAR}, #{bookUrl,jdbcType=VARCHAR},#{bookImg,jdbcType=VARCHAR},#{status},now(), now()
       )
   </insert>
+  
+  <select id="selectBooks" resultType="Book">
+    select <include refid="selectFields"></include>
+    from book
+    where status=0
+    order by create_time asc
+  </select>
+
+
+  <select id="selectBooksBySelective" resultType="Book">
+    select <include refid="selectFields"></include>
+    from book
+    where status=0
+    <if test="title != null">
+        and book_name like "%"#{title}"%"
+    </if>
+    order by create_time asc
+  </select>
+
+
+  <select id="selectBookById" resultType="Book">
+    select <include refid="selectFields"></include>
+    from book
+    where status=0
+    and id=#{bookId}
+  </select>
+
+
+
+    <update id="updateBookStatus">
+        update book
+        set status = #{status}
+        where id = #{id}
+    </update>
+
 </mapper>

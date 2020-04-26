@@ -6,6 +6,7 @@ import com.zqy.sharecommunity.dao.VideoMapper;
 import com.zqy.sharecommunity.entity.DownloadUrl;
 import com.zqy.sharecommunity.entity.Video;
 import com.zqy.sharecommunity.entity.VideoAttr;
+import com.zqy.sharecommunity.entity.VideoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,34 @@ public class VideoService {
         videoDownloadUrl.insert(downloadUrl);
     }
 
-    public List<Video> findAll(Video video) {
-        return null;
+    public List<VideoDTO> findVideos(int offset,int limit) {
+        return videoMapper.selectVideos(offset,limit);
     }
+
+    public int findVideoCount(){
+        return videoMapper.selectVideoCount();
+    }
+
+    public VideoAttr findVideoAttr(int videoId){
+        return videoAttrMapper.selectVideoAttr(videoId);
+    }
+
+
+    public VideoDTO findVideoById(int videoId){
+        return videoMapper.selectVideoById(videoId);
+    }
+    //获取下载链接
+    public List<DownloadUrl> findDownloadUrl(int videoId){
+        return videoDownloadUrl.selectDownloadUrlByVideoId(videoId);
+    }
+
+
+    public List<VideoDTO> findVideosSelective(String title){
+        return videoMapper.selectVideosBySelective(title);
+    }
+
+    public int updateStatus(int status,int id){
+        return videoMapper.updateVideoStatus(status,id);
+    }
+
 }

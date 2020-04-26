@@ -41,9 +41,8 @@ public class SpiderWangyiyunMusicTask {
     }
 
 
-    //解析页面，获取电影数据并存储
     private void parse(String html) throws Exception {
-//解析html获取Document
+        //解析html获取Document
         Document doc = Jsoup.parse(html);
 
         Elements elements = doc.select("div.g-wrap12").select("div#song-list-pre-cache").select("ul").select("li");
@@ -79,7 +78,7 @@ public class SpiderWangyiyunMusicTask {
             }
 
             //获取下载链接
-            String downloadUrl = "https://link.hhtjim.com/163/"+songId+".mp3";
+            String downloadUrl = "http://music.163.com/song/media/outer/url?id="+songId;
 
 
             Music music=new Music();
@@ -98,7 +97,6 @@ public class SpiderWangyiyunMusicTask {
 
         System.out.println();
 
-
-
     }
+
 }

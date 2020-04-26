@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" th:href="@{/img/icon3.png}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/global.css}"/>
+    <title>影片-详情</title>
+
+    <style>
+        .bg-navbar{
+            background-color: #4abdcc;
+        }
+
+        h1{
+            font-size: 14px;
+            text-align: left;
+            color: #006600;
+            margin: 5px 0px;
+            padding: 0px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="nk-container">
+    <!-- 头部 -->
+    <header class="bg-navbar sticky-top" th:fragment="header">
+        <div class="container">
+            <!-- 导航 -->
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <!-- logo -->
+                <!--<a class="navbar-brand" href="#"></a>-->
+                <!--<button class="navbar-toggler" type="button" data-toggle="collapse"-->
+                <!--data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"-->
+                <!--aria-expanded="false" aria-label="Toggle navigation">-->
+                <!--<span class="navbar-toggler-icon"></span>-->
+                <!--</button>-->
+                <!-- 功能 -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ml-3 btn-group-vertical" >
+                            <a class="nav-link text-light" href="index.html" >影视</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical">
+                            <a class="nav-link text-light" href="index.html" >书籍</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical">
+                            <a class="nav-link text-light" href="index.html" >音乐</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical">
+                            <a class="nav-link text-light" th:href="@{/index}" >话题广场</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser!=null}">
+                            <a class="nav-link position-relative text-light" th:href="@{/letter/list}">消息<span
+                                    class="badge badge-danger" th:text="${allUnreadCount!=0 ? allUnreadCount:''}">12</span></a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser==null}">
+                            <a class="nav-link text-light" th:href="@{/register}" >注册</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser==null}">
+                            <a class="nav-link text-light" th:href="@{/login}" >登录</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical dropdown" th:if="${loginUser!=null}">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img th:src="${loginUser.headerUrl}" class="rounded-circle"
+                                     style="width:30px;"/>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-center" th:href="@{|/user/profile/${loginUser.id}|}">个人主页</a>
+                                <a class="dropdown-item text-center" th:href="@{/user/setting}">账号设置</a>
+                                <a class="dropdown-item text-center" th:href="@{/logout}">退出登录</a>
+                                <div class="dropdown-divider"></div>
+                                <span class="dropdown-item text-center text-secondary" th:utext="${loginUser.username}">xxxx</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- 搜索 -->
+                    <form class="form-inline my-2 my-lg-0" method="get" th:action="@{/search}">
+                        <input class="form-control mr-sm-2" type="search" aria-label="Search" name="keyword" th:value="${keyword}"/>
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">搜索</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 内容 -->
+    <div class="main">
+        <div class="container">
+
+            <table width="960" border="0" align="center" cellpadding="3" cellspacing="0" style="text-align:left">
+                <tr>
+                    <td valign="top"style="width:250px;">
+                        <div class="img" style="width:250px;height:350px;">
+                            <img th:src="${video.img}" th:alt="${video.videoName}" width="250" height="350" border="0"/>
+                            <input type="hidden" value="" /></div></td>
+                    <td valign="top" style="width:520px">
+                        <table width="100%" border="0" cellpadding="3" cellspacing="1">
+                            <tr>
+                                <td><strong>影片名称：</strong><font color="#000" th:text="${video.videoName}"></font></td>
+                            </tr>
+                            <td><strong>影片备注：</strong><font color="#000" th:text="${video.remark}"></font></td>
+                            <tr>
+                                <td><strong>影片演员：</strong><font color="#000" th:text="${video.videoActors}"></font></td>
+                            </tr>
+                            <tr>
+                                <td><strong>影片导演：</strong><font color="#000" th:text="${video.videoDirector}"></font></td>
+                            </tr>
+                            <tr>
+                                <td><strong>影片类型：</strong><font color="#000" th:text="${v.areaName}"></font></td>
+                            </tr>
+                            <tr>
+                                <td><strong>影片地区：</strong><font color="#000" th:text="${v.typeName}"></font></td>
+                            </tr>
+                            <tr>
+                                <td><strong>更新时间：</strong><font color="#000" th:text="${#dates.format(video.updateTime,'yyyy-MM-dd HH:mm:ss')}"></font></td>
+                            </tr>
+                            <tr>
+                                <td><strong>影片状态：</strong><font color="#000" th:text="${video.videoStatus}"></font></td>
+                            </tr>
+                            <tr>
+                                <td><strong>影片语言：</strong><font color="#000" th:text="${video.videoLanguage}"></font></td>
+                            </tr>
+                            <tr>
+                                <td><strong>上映日期：</strong><font color="#000" th:text="${video.showDate}"></font></td>
+                            </tr>
+                            <tr>
+                                <td valign="top">
+                                    <strong>影片简介：</strong>
+                                    <div class="intro" style="width: 620px">
+                                        <font color="#000" th:utext="${video.intro}">s</font>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!--下载链接-->
+                <tr><td colspan="2" align="left" class="bt">
+                    <h1>来源:kkyun</h1>
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr th:each="url:${urls}">
+                            <td>
+                                <!--<input type='checkbox' name='copy_yah' id='copy_yah' value='' checked/>-->
+                                <a th:utext="${url.downloadUrl}"></a>
+                            </td>
+                        </tr>
+                    </table>
+                </td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 尾部 -->
+    <footer class="bg-navbar">
+        <div class="container">
+            <div class="row">
+                <!-- 关于我们 -->
+                <div class="col-12">
+                    <div class="row" >
+                        <div class="col" style="margin: 0 auto;display:inline-block;">
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" href="#">关于我们</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" href="#">免责声明</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" href="#">友情链接</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="nav btn-group-vertical company-info">
+                                <li class="nav-item text-white-50 " style="color: black">
+                                    注:1、本站资源介绍均由机器人自动采集提供，所有资源的实际视频文件都只保存在网友自己的计算机上。本站不会保存、复制或传播任何视频文件，也不对本站上的任何内容负法律责任。
+                                </li>
+                                <li class="nav-item text-white-50" style="color: white">
+                                    注:2、本站重视知识产权保护，并制定了旨在保护权利人的合法权益的措施和步骤，当权利人发现在本站的内容侵犯其著作权时，请权利人向本站发出书面“权利通知”，本站将依法采取措施移除相关内容或断开相关链接。
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script th:src="@{/js/global.js}"></script>
+<script th:src="@{js/index.js}"></script>
+</body>
+</html>

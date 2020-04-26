@@ -1,33 +1,54 @@
 package com.zqy.sharecommunity.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 import java.util.Date;
 
 
 //帖子实体类
+//创建索引，type默认_doc(7.0已废弃),分片6,副本3
+@Document(indexName = "discusspost",type = "_doc",shards = 6,replicas =3 )
 public class DiscussPost {
-    private Integer id;
+    @Id
+    private int id;
 
+    @Field(type = FieldType.Integer)
     private int userId;
 
+    /**
+     * 互联网校招（关键词 分词，拆词--->:互联网，校招） analyzer ：分词器 --->ik_max_word 最广分词 （存储用）  ik_mart:最优（搜索用）
+     * **/
+
+    @Field(type = FieldType.Text,analyzer = "ik_max_word",searchAnalyzer = "ik_mart")
     private String title;   //标题
 
-    private Integer type;  // 0-普通  1-置顶
-
-    private Integer status;   //0-正常  1-精华  2-拉黑
-
-    private Date createTime;
-
-    private Integer commentCount;   //评论数
-
-    private Double score;    //排名用的
-
+    @Field(type = FieldType.Text,analyzer = "ik_max_word",searchAnalyzer = "ik_mart")
     private String content;    //内容
 
-    public Integer getId() {
+    @Field(type = FieldType.Integer)
+    private int type;  // 0-普通  1-置顶
+
+    @Field(type = FieldType.Integer)
+    private int status;   //0-正常  1-精华  2-拉黑
+
+    @Field(type = FieldType.Date)
+    private Date createTime;
+
+    @Field(type = FieldType.Integer)
+    private int commentCount;   //评论数
+
+    @Field(type = FieldType.Double)
+    private Double score;    //排名用的
+
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,19 +68,19 @@ public class DiscussPost {
         this.title = title == null ? null : title.trim();
     }
 
-    public Integer getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -71,11 +92,11 @@ public class DiscussPost {
         this.createTime = createTime;
     }
 
-    public Integer getCommentCount() {
+    public int getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(Integer commentCount) {
+    public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
     }
 

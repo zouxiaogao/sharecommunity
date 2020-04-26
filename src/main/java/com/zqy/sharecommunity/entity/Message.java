@@ -3,41 +3,41 @@ package com.zqy.sharecommunity.entity;
 import java.util.Date;
 
 public class Message {
-    private Integer id;
+    private int id;
 
-    private Integer fromId;
+    private int fromId;
 
-    private Integer toId;
+    private int toId;
 
     private String conversationId;
 
-    private Integer status;
+    private int status;
 
     private Date createTime;
 
     private String content;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getFromId() {
+    public int getFromId() {
         return fromId;
     }
 
-    public void setFromId(Integer fromId) {
+    public void setFromId(int fromId) {
         this.fromId = fromId;
     }
 
-    public Integer getToId() {
+    public int getToId() {
         return toId;
     }
 
-    public void setToId(Integer toId) {
+    public void setToId(int toId) {
         this.toId = toId;
     }
 
@@ -49,11 +49,11 @@ public class Message {
         this.conversationId = conversationId == null ? null : conversationId.trim();
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

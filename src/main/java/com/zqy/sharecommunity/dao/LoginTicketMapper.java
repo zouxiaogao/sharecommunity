@@ -1,19 +1,41 @@
 package com.zqy.sharecommunity.dao;
 
 import com.zqy.sharecommunity.entity.LoginTicket;
-import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
+
+/**
+ *
+ * 采用redis存取登录凭证，此Mapper废弃
+ * ***/
+@Deprecated
 public interface LoginTicketMapper {
-    int deleteByPrimaryKey(Integer id);
 
-    int insert(LoginTicket record);
+    @Insert({
+            "insert into login_ticket(user_id,ticket,status,expired) ",
+            "values(#{userId},#{ticket},#{status},#{expired})"
+    })
+    @Options(useGeneratedKeys = true,keyProperty = "id")
+    int insertLoginTicket(LoginTicket loginTicket);
 
-    int insertSelective(LoginTicket record);
+    @Select({
+            "select id,user_id,ticket,status,expired ",
+            "from login_ticket where ticket=#{ticket}"
+    })
+    LoginTicket selectByTicket(String ticket);
 
-    LoginTicket selectByPrimaryKey(Integer id);
+    @Update({
+            "<script>",
+            "update login_ticket set status=#{status} where ticket=#{ticket} ",
+            "<if test=\"ticket!=null\"> ",
+            "and 1=1 ",
+            "</if>",
+            "</script>"
+    })
+    int updateStatus(@Param("ticket") String ticket, @Param("status") int status);
 
-    int updateByPrimaryKeySelective(LoginTicket record);
 
-    int updateByPrimaryKey(LoginTicket record);
 }

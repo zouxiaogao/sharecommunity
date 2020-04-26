@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class SpiderBookTask {
                 Document bookDoc = Jsoup.parse(bookHtml);
                 Elements bookDetail = bookDoc.select("div.card").select("div.bookmark-list");
                 String bookName = bookDetail.select("h1").text();
-                String bookImg = bookDetail.select("div").select("img.book-img").attr("src");
+                String bookImg = "http://www.shicimingju.com"+bookDetail.select("div").select("img.book-img").attr("src");
                 Elements bookItem = bookDetail.select("div").select("p");
                 String period = bookItem.get(0).text().substring(bookItem.get(0).text().indexOf("：") + 1);
                 String bookAuthor = bookItem.get(1).text().substring(bookItem.get(1).text().indexOf("：") + 1);

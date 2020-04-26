@@ -11,59 +11,59 @@ public class Comment {
 
     private Integer entityId;
 
-    private Integer targetId;
+    private int targetId;
 
-    private Integer status;
+    private int status;
 
     private Date createTime;
 
     private String content;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Integer getEntityType() {
+    public int getEntityType() {
         return entityType;
     }
 
-    public void setEntityType(Integer entityType) {
+    public void setEntityType(int entityType) {
         this.entityType = entityType;
     }
 
-    public Integer getEntityId() {
+    public int getEntityId() {
         return entityId;
     }
 
-    public void setEntityId(Integer entityId) {
+    public void setEntityId(int entityId) {
         this.entityId = entityId;
     }
 
-    public Integer getTargetId() {
+    public int getTargetId() {
         return targetId;
     }
 
-    public void setTargetId(Integer targetId) {
+    public void setTargetId(int targetId) {
         this.targetId = targetId;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

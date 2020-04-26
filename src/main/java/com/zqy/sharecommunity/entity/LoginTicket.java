@@ -3,29 +3,29 @@ package com.zqy.sharecommunity.entity;
 import java.util.Date;
 
 public class LoginTicket {
-    private Integer id;
+    private int id;
 
-    private Integer userId;
+    private int userId;
 
     private String ticket;
 
-    private Integer status;
+    private int status;
 
-    private Date expired;
+    private Date expired;  //日期
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -37,11 +37,11 @@ public class LoginTicket {
         this.ticket = ticket == null ? null : ticket.trim();
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

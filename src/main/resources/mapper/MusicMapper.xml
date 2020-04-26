@@ -2,19 +2,70 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zqy.sharecommunity.dao.MusicMapper" >
 
+    <sql id="selectFields">
+        id, title, author, country, songwriter, `language`,compose, album_title, pic_huge, pic_small, publish_time, proxy_comoany, download_url, lyric, status,create_time, update_time
+    </sql>
+
+    <sql id="insertFields">
+        title, author, country, songwriter, `language`,compose, album_title, pic_huge, pic_small, publish_time, proxy_comoany, download_url, lyric, status,create_time, update_time
+
+    </sql>
+
 
   <insert id="insert" parameterType="com.zqy.sharecommunity.entity.Music" useGeneratedKeys="true" keyProperty="id">
     insert into music (id, title, author, 
       country, songwriter, `language`,
       compose, album_title, pic_huge, 
       pic_small, publish_time, proxy_comoany, 
-      download_url, lyric, create_time, 
+      download_url, lyric,status, create_time,
       update_time)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
       #{country,jdbcType=VARCHAR}, #{songwriter,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
       #{compose,jdbcType=VARCHAR}, #{albumTitle,jdbcType=VARCHAR}, #{picHuge,jdbcType=VARCHAR}, 
       #{picSmall,jdbcType=VARCHAR}, #{publishTime,jdbcType=VARCHAR}, #{proxyComoany,jdbcType=VARCHAR}, 
-      #{downloadUrl,jdbcType=VARCHAR}, #{lyric,jdbcType=VARCHAR}, now(),
+      #{downloadUrl,jdbcType=VARCHAR}, #{lyric,jdbcType=VARCHAR}, #{status},now(),
       now())
   </insert>
+
+    <select id="selectMusic" resultType="Music">
+        select <include refid="selectFields"></include>
+        from music
+        where status = 0
+        order by create_time asc
+        limit #{offset}, #{limit}
+    </select>
+
+
+    <select id="selectMusicBySelective" resultType="Music">
+        select <include refid="selectFields"></include>
+        from music
+        where status = 0
+        order by create_time asc
+        <if test="title != null">
+            and title like "%"#{title}"%"
+        </if>
+    </select>
+
+
+    <update id="updateMusicStatus">
+        update music
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+
+    <select id="selectMusicCount" resultType="int">
+        select count(id)
+        from music
+        where status = 0
+    </select>
+
+    <select id="selectMusicById" resultType="Music">
+        select <include refid="selectFields"></include>
+        from music
+        where status = 0
+        and id=#{id}
+    </select>
+
+
 </mapper>

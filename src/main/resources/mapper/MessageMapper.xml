@@ -1,133 +1,132 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zqy.sharecommunity.dao.MessageMapper" >
-  <resultMap id="BaseResultMap" type="com.zqy.sharecommunity.entity.Message" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="from_id" property="fromId" jdbcType="INTEGER" />
-    <result column="to_id" property="toId" jdbcType="INTEGER" />
-    <result column="conversation_id" property="conversationId" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.zqy.sharecommunity.entity.Message" extends="BaseResultMap" >
-    <result column="content" property="content" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, from_id, to_id, conversation_id, status, create_time
-  </sql>
-  <sql id="Blob_Column_List" >
-    content
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
+  <sql id="selectFields">
+        id, from_id, to_id, conversation_id, content, status, create_time
+    </sql>
+
+  <sql id="insertFields">
+        from_id, to_id, conversation_id, content, status, create_time
+    </sql>
+
+
+  <!--
+    查询分析：
+      根据conversationId分组，查出最大会话id，得出最新私信
+  -->
+  <select id="selectConversations" resultType="Message">
+    select <include refid="selectFields"></include>
     from message
-    where id = #{id,jdbcType=INTEGER}
+    where id in (
+    select max(id) from message
+    where status != 2
+    and from_id != 1
+    and (from_id = #{userId} or to_id = #{userId})
+    group by conversation_id
+    )
+    order by id desc
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from message
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.zqy.sharecommunity.entity.Message" >
-    insert into message (id, from_id, to_id, 
-      conversation_id, status, create_time, 
-      content)
-    values (#{id,jdbcType=INTEGER}, #{fromId,jdbcType=INTEGER}, #{toId,jdbcType=INTEGER}, 
-      #{conversationId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR})
+
+  <!--查询会话数量-->
+  <select id="selectConversationCount" resultType="int">
+        select count(m.maxid) from (
+            select max(id) as maxid from message
+            where status != 2
+            and from_id != 1
+            and (from_id = #{userId} or to_id = #{userId})
+            group by conversation_id
+        ) as m
+    </select>
+
+  <!--消息列表-->
+  <select id="selectLetters" resultType="Message">
+    select <include refid="selectFields"></include>
+    from message
+    where status != 2
+    and from_id != 1
+    and conversation_id = #{conversationId}
+    order by id desc
+  </select>
+
+  <!--查询每个会话的消息数量-->
+  <select id="selectLetterCount" resultType="int">
+        select count(id)
+        from message
+        where status != 2
+        and from_id != 1
+        and conversation_id = #{conversationId}
+    </select>
+
+  <!--查询每个会话的未读消息数量-->
+  <select id="selectLetterUnreadCount" resultType="int">
+    select count(id)
+    from message
+    where status = 0
+    and from_id != 1
+    and to_id = #{userId}
+    <if test="conversationId!=null">
+      and conversation_id = #{conversationId}
+    </if>
+  </select>
+
+    <!--新增消息-->
+  <insert id="insertMessage" parameterType="Message" keyProperty="id">
+    insert into message(<include refid="insertFields"></include>)
+    values(#{fromId},#{toId},#{conversationId},#{content},#{status},#{createTime})
   </insert>
-  <insert id="insertSelective" parameterType="com.zqy.sharecommunity.entity.Message" >
-    insert into message
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="fromId != null" >
-        from_id,
-      </if>
-      <if test="toId != null" >
-        to_id,
-      </if>
-      <if test="conversationId != null" >
-        conversation_id,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="fromId != null" >
-        #{fromId,jdbcType=INTEGER},
-      </if>
-      <if test="toId != null" >
-        #{toId,jdbcType=INTEGER},
-      </if>
-      <if test="conversationId != null" >
-        #{conversationId,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zqy.sharecommunity.entity.Message" >
-    update message
-    <set >
-      <if test="fromId != null" >
-        from_id = #{fromId,jdbcType=INTEGER},
-      </if>
-      <if test="toId != null" >
-        to_id = #{toId,jdbcType=INTEGER},
-      </if>
-      <if test="conversationId != null" >
-        conversation_id = #{conversationId,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
+
+    <!--修改消息的状态-->
+  <update id="updateStatus">
+    update message set status = #{status}
+    where id in
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zqy.sharecommunity.entity.Message" >
-    update message
-    set from_id = #{fromId,jdbcType=INTEGER},
-      to_id = #{toId,jdbcType=INTEGER},
-      conversation_id = #{conversationId,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zqy.sharecommunity.entity.Message" >
-    update message
-    set from_id = #{fromId,jdbcType=INTEGER},
-      to_id = #{toId,jdbcType=INTEGER},
-      conversation_id = #{conversationId,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
+
+    <!--查询某个主题下最新的通知-->
+    <select id="selectLatestNotice" resultType="Message">
+        select <include refid="selectFields"></include>
+        from message
+        where id in (
+        select max(id) from message
+        where status != 2
+        and from_id = 1
+        and to_id = #{userId}
+        and conversation_id = #{topic}
+        )
+    </select>
+
+    <!--查询某个主题下的消息数量-->
+    <select id="selectNoticeCount" resultType="int">
+        select count(id) from message
+        where status != 2
+        and from_id = 1
+        and to_id = #{userId}
+        and conversation_id = #{topic}
+    </select>
+
+    <!--查询某个主题下未读的消息数量-->
+    <select id="selectNoticeUnreadCount" resultType="int">
+        select count(id) from message
+        where status = 0
+        and from_id = 1
+        and to_id = #{userId}
+        <if test="topic!=null">
+            and conversation_id = #{topic}
+        </if>
+    </select>
+    <!--查询某个主题下的全部消息-->
+    <select id="selectNotices" resultType="Message">
+        select <include refid="selectFields"></include>
+        from message
+        where status != 2
+        and from_id = 1
+        and to_id = #{userId}
+        and conversation_id = #{topic}
+        order by create_time desc
+        limit #{offset}, #{limit}
+    </select>
+
 </mapper>

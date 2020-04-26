@@ -2,8 +2,8 @@ package com.zqy.sharecommunity;
 
 import com.zqy.sharecommunity.dao.DiscussPostMapper;
 import com.zqy.sharecommunity.dao.UserMapper;
-import com.zqy.sharecommunity.entity.DiscussPost;
-import com.zqy.sharecommunity.entity.User;
+import com.zqy.sharecommunity.dao.VideoMapper;
+import com.zqy.sharecommunity.entity.VideoDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,22 +23,29 @@ public class MapperTests {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private VideoMapper videoMapper;
+
     @Test
-    public void testSelectPosts(){
-        List<DiscussPost> discussPosts = postMapper.selectDiscussPosts(149);
-        for(DiscussPost post:discussPosts){
-            System.out.println(post);
+    public void VideoTest(){
+        List<VideoDTO> videos = videoMapper.selectVideos(1,15);
+        for (VideoDTO v:videos){
+            System.out.println(v);
         }
-
-        int i = postMapper.selectDiscussPostRows(149);
-        System.out.println(i);
     }
 
+//    @Test
+//    public void testSelectPosts(){
+//        List<DiscussPost> discussPosts = postMapper.selectDiscussPosts(149);
+//        for(DiscussPost post:discussPosts){
+//            System.out.println(post);
+//        }
+//
+//        int i = postMapper.selectDiscussPostRows(149);
+//        System.out.println(i);
+//    }
 
 
-    @Test
-    public void testUserSelect(){
-        User user = userMapper.selectByUserId(149);
-        System.out.println(user.toString());
-    }
+
+
 }

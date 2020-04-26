@@ -1,3 +1,4 @@
+var CONTEXT_PATH="/share";
 window.alert = function(message) {
 	if(!$(".alert-box").length) {
 		$("body").append(

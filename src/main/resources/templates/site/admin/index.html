@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>资源网后台管理</title>
+<link rel="icon" th:href="@{/img/icon3.png}"/>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/materialdesignicons.min.css}"  rel="stylesheet">
+<link th:href="@{/css/style.min.css}" rel="stylesheet">
+</head>
+
+<body>
+<div class="lyear-layout-web">
+  <div class="lyear-layout-container">
+    <!--左侧导航-->
+    <aside class="lyear-layout-sidebar">
+
+      <!-- logo -->
+      <div id="logo" class="sidebar-header">
+        <a href="index.html">
+            <img th:src="@{/img/logo2.png}" title="admin" alt="admin" />
+        </a>
+      </div>
+      <div class="lyear-layout-sidebar-scroll">
+
+        <nav class="sidebar-main">
+          <ul class="nav nav-drawer">
+            <li class="nav-item active"> <a th:href="@{/admin/index}"><i class="mdi mdi-home"></i> 后台首页</a> </li>
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-palette"></i>共享资源管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a th:href="@{/admin/video/all}">影视资源</a> </li>
+                <li> <a th:href="@{/admin/book/all}">书籍资源</a> </li>
+                <li> <a th:href="@{/admin/music/all}">音乐资源</a> </li>
+                <li> <a href="">爬取资源</a> </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-account"></i>用户管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a th:href="@{/admin/user/all}">所有用户</a> </li>
+                <li> <a th:href="@{/admin/unActive/all}">未激活用户</a> </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i>帖子管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a th:href="@{/admin/post/all}">查看帖子</a> </li>
+                <li> <a th:href="@{/admin/closePost/all}">已封禁帖子</a> </li>
+                <li> <a href="">已置顶</a> </li>
+                <li> <a href="">已加精</a> </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-multiplication"></i>统计管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a href="">网站UV</a> </li>
+                <li> <a href="">用户活跃统计</a> </li>
+              </ul>
+            </li>
+
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-chart-donut-variant"></i>日志管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a href="">查看日志</a> </li>
+                <li> <a href="">导出日志</a> </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p class="copyright">Copyright &copy; 2019. <a target="_blank" href="http://lyear.itshubao.com">资源网</a> All rights reserved.</p>
+        </div>
+      </div>
+
+    </aside>
+    <!--End 左侧导航-->
+
+    <!--头部信息-->
+    <header class="lyear-layout-header">
+
+      <nav class="navbar navbar-default">
+        <div class="topbar">
+
+          <div class="topbar-left">
+            <div class="lyear-aside-toggler">
+              <span class="lyear-toggler-bar"></span>
+              <span class="lyear-toggler-bar"></span>
+              <span class="lyear-toggler-bar"></span>
+            </div>
+            <span class="navbar-page-title"> 后台首页 </span>
+          </div>
+
+          <ul class="topbar-right">
+            <li class="dropdown dropdown-profile">
+              <a href="javascript:void(0)" data-toggle="dropdown">
+                <img class="img-avatar img-avatar-48 m-r-10" th:src="@{/img/icon.png}" alt="管理员" />
+                <span>管理员 <span class="caret"></span></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li> <a href="lyear_pages_profile.html"><i class="mdi mdi-account"></i> 个人信息</a> </li>
+                <li> <a href="lyear_pages_edit_pwd.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a> </li>
+                <li> <a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
+                <li class="divider"></li>
+                <li> <a href="admin-login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </nav>
+
+    </header>
+    <!--End 头部信息-->
+
+    <!--页面主要内容-->
+    <main class="lyear-layout-content">
+
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-sm-6 col-lg-3">
+
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/perfect-scrollbar.min.js}"></script>
+<script th:src="@{/js/main.min.js}"></script>
+</body>
+</html>

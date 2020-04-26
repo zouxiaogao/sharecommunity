@@ -30,6 +30,7 @@ public class Music {
     private String downloadUrl;
 
     private String lyric;
+    private int status;
 
     private Date createTime;
 
@@ -53,6 +54,14 @@ public class Music {
 
     public String getAuthor() {
         return author;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public void setAuthor(String author) {

@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -68,8 +69,8 @@ public class SpiderVideoTask {
             }else if ("欧美地区".equals(area)){
                 video.setAreaTypeId(5);
             }else if ("香港地区".equals(area)){
-                video.setAreaTypeId(5);
-            }else if ("其他地区".equals(area)){
+                video.setAreaTypeId(6);
+            }else if ("其它地区".equals(area)){
                 video.setAreaTypeId(7);
             }
 

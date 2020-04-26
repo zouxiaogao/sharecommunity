@@ -13,6 +13,8 @@ public class Video {
 
     private Integer videoTypeId;
 
+    private int status;
+
     private Date updateTime;
 
     private Date createTime;
@@ -55,6 +57,14 @@ public class Video {
 
     public void setVideoTypeId(Integer videoTypeId) {
         this.videoTypeId = videoTypeId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Date getUpdateTime() {

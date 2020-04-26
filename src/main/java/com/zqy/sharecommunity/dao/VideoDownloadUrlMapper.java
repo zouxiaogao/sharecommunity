@@ -14,5 +14,10 @@ public interface VideoDownloadUrlMapper {
 
     int insert(@Param("list") List<DownloadUrl> record);
 
+    List<DownloadUrl> selectDownloadUrlByVideoId(int videoId);
+    List<DownloadUrl> selectDownloadUrlByBookId(int bookId);
+    DownloadUrl selectDownloadUrlById(int id);
 
+    DownloadUrl selectPreChapterById(int id);
+    DownloadUrl selectNextChapterById(int id);
 }

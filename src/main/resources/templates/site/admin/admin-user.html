@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>资源网-用户</title>
+<link rel="icon" th:href="@{/img/icon3.png}"/>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/materialdesignicons.min.css}"  rel="stylesheet">
+<link th:href="@{/css/style.min.css}" rel="stylesheet">
+</head>
+  
+<body>
+<div class="lyear-layout-web">
+  <div class="lyear-layout-container">
+    <!--左侧导航-->
+    <aside class="lyear-layout-sidebar">
+
+      <!-- logo -->
+      <div id="logo" class="sidebar-header">
+        <img th:src="@{/img/logo2.png}" title="admin" alt="admin" />
+      </div>
+      <div class="lyear-layout-sidebar-scroll">
+
+        <nav class="sidebar-main">
+          <ul class="nav nav-drawer">
+            <li class="nav-item"> <a href="index.html"><i class="mdi mdi-home"></i> 后台首页</a> </li>
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-palette"></i>共享资源管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a th:href="@{/admin/video/all}">影视资源</a> </li>
+                <li> <a th:href="@{/admin/book/all}">书籍资源</a> </li>
+                <li> <a th:href="@{/admin/music/all}">音乐资源</a> </li>
+                <li> <a href="">爬取资源</a> </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item-has-subnav open">
+              <a href="javascript:void(0)"><i class="mdi mdi-account"></i>用户管理</a>
+              <ul class="nav nav-subnav">
+                <li  class="active"> <a th:href="@{/admin/user/all}">所有用户</a> </li>
+                <li> <a th:href="@{/admin/unActive/all}">未激活用户</a> </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i>帖子管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a th:href="@{/admin/post/all}">查看帖子</a> </li>
+                <li> <a th:href="@{/admin/closePost/all}">已封禁帖子</a> </li>
+                <li> <a href="">已置顶</a> </li>
+                <li> <a href="">已加精</a> </li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-multiplication"></i>统计管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a href="">网站UV</a> </li>
+                <li> <a href="">用户活跃统计</a> </li>
+              </ul>
+            </li>
+
+            <li class="nav-item nav-item-has-subnav">
+              <a href="javascript:void(0)"><i class="mdi mdi-chart-donut-variant"></i>日志管理</a>
+              <ul class="nav nav-subnav">
+                <li> <a href="">查看日志</a> </li>
+                <li> <a href="">导出日志</a> </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p class="copyright">Copyright &copy; 2019. <a target="_blank" href="http://lyear.itshubao.com">资源网</a> All rights reserved.</p>
+        </div>
+      </div>
+
+    </aside>
+    <!--End 左侧导航-->
+
+    <!--头部信息-->
+    <header class="lyear-layout-header">
+
+      <nav class="navbar navbar-default">
+        <div class="topbar">
+
+          <div class="topbar-left">
+            <div class="lyear-aside-toggler">
+              <span class="lyear-toggler-bar"></span>
+              <span class="lyear-toggler-bar"></span>
+              <span class="lyear-toggler-bar"></span>
+            </div>
+            <span class="navbar-page-title"> 用户 - 列表 </span>
+          </div>
+          <ul class="topbar-right">
+            <li class="dropdown dropdown-profile">
+              <a href="javascript:void(0)" data-toggle="dropdown">
+                <img class="img-avatar img-avatar-48 m-r-10" src="images/users/avatar.jpg" alt="管理员" />
+                <span>管理员 <span class="caret"></span></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li> <a href="lyear_pages_profile.html"><i class="mdi mdi-account"></i> 个人信息</a> </li>
+                <li> <a href="lyear_pages_edit_pwd.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a> </li>
+                <li> <a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
+                <li class="divider"></li>
+                <li> <a href="admin-login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </nav>
+
+    </header>
+    <!--End 头部信息-->
+    <!--页面主要内容-->
+    <main class="lyear-layout-content">
+      
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-toolbar clearfix">
+                <form class="pull-right search-bar" method="get" action="#!" role="form">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <input type="hidden" name="search_field" id="search-field" value="title">
+                      <button class="btn btn-default" disabled data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                      标题
+                      </button>
+                    </div>
+                    <input type="text" class="form-control" value="" name="keyword" placeholder="请输入标题">
+                  </div>
+                </form>
+                <div class="toolbar-btn-action">
+                  <a class="btn btn-primary m-r-5" href="#!"><i class="mdi mdi-plus"></i> 新增</a>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>
+                          <label class="lyear-checkbox checkbox-primary">
+                            <input type="checkbox" id="check-all"><span></span>
+                          </label>
+                        </th>
+                        <th>编号</th>
+                        <th>账号</th>
+                        <th>邮箱</th>
+                        <th>注册时间</th>
+                        <th>类型</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="map:${users}">
+                        <td>
+                          <label class="lyear-checkbox checkbox-primary">
+                            <input type="checkbox" name="ids[]" value="1"><span></span>
+                          </label>
+                        </td>
+                        <td th:utext="${map.id}">1</td>
+                        <td th:utext="${map.username}">测试账号2122</td>
+                        <td th:utext="${map.email}">213123@qq.com</td>
+                        <td th:text="${#dates.format(map.createTime,'yyyy-MM-dd HH:mm:ss')}">2020/4/26</td>
+                        <td th:text="${map.type == 0 ?'普通用户':'管理员'}">2020/4/26</td>
+                        <td><font th:class="${map.status == 1 ?'text-success':'text-danger'}" th:text="${map.status == 1 ?'正常':'未激活'}">正常</font></td>
+                        <td>
+                          <div class="btn-group">
+                            <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
+                            <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" th:if="${pageInfo.hasNextPage}">
+                    <a class="page-link" th:href="'/share/admin/user/all?pageNum=1'">首页</a>
+                  </li>
+                  <li th:class="|page-item ${pageInfo.pageNum==1?'disabled':''}|">
+                    <a class="page-link" th:href="'/share/admin/user/all?pageNum='+${pageInfo.prePage}">上一页</a></li>
+
+                  <th:block th:each="nav : ${pageInfo.navigatepageNums}">
+                    <li th:class="|page-item  ${nav == pageInfo.pageNum?'active':''}|">
+                      <a class="page-link" th:href="@{'/admin/user/all?pageNum='+${nav}}" th:text="${nav}"></a></li>
+                  </th:block>
+                  <li th:class="|page-item ${pageInfo.pageNum==pageInfo.pages?'disabled':''}|">
+                    <a class="page-link" th:href="'/share/admin/user/all?pageNum='+${pageInfo.nextPage}">下一页</a>
+                  </li>
+                  <li class="page-item" th:if="${pageInfo.hasNextPage}">
+                    <a class="page-link" th:href="'/share/admin/user/all?pageNum='+${pageInfo.pages}">末页</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/perfect-scrollbar.min.js}"></script>
+<script th:src="@{/js/main.min.js}"></script>
+<script type="text/javascript">
+$(function(){
+    $('.search-bar .dropdown-menu a').click(function() {
+        var field = $(this).data('field') || '';
+        $('#search-field').val(field);
+        $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
+    });
+});
+</script>
+</body>
+</html>
